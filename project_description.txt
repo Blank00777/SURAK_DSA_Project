@@ -1,0 +1,238 @@
+================================================================================
+                  STOCK PRICE ANALYZER - PROJECT GUIDE
+              Algorithms and Data Structures - Final Project
+================================================================================
+
+Instructor: Alen Rafagudinov
+Course: Algorithms and Data Structures
+Institution: Superior University
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+Build a command-line Stock Price Analyzer that demonstrates understanding of
+fundamental algorithms and data structures.
+
+Files Provided:
+- stock_analyzer.py: Boilerplate code with 5 TODO functions
+- stock_data.csv: 60 stock price records (2024-01-02 to 2024-03-26)
+- project_description.txt: This guide
+
+Your Task: Implement 5 TODO functions in stock_analyzer.py
+
+Teams: Individual or up to 5 members. Every member must be able to explain
+all code (not just their own portion) during evaluation.
+
+================================================================================
+2. LEARNING OBJECTIVES
+================================================================================
+
+Demonstrate your ability to:
+1. Implement divide-and-conquer sorting (Merge Sort) - O(n log n)
+2. Use binary search for efficient lookup - O(log n)
+3. Calculate prefix sums for optimized range queries - O(1) per query
+4. Apply Kadane's algorithm for optimization problems (dynamic programming)
+5. Integrate multiple algorithms into a cohesive application
+
+Key Skills: Algorithm implementation, time/space complexity analysis, recursion,
+array manipulation, algorithm selection, testing and debugging.
+
+
+================================================================================
+3. FUNCTION REQUIREMENTS
+================================================================================
+
+FUNCTION 1: merge_sort_by_price(stocks) - 20 points
+----------------------------------------------------
+Algorithm: Merge Sort | Purpose: Sort stocks by price (ascending)
+
+Requirements:
+- Implement merge sort from scratch (NOT Python's sorted())
+- Sort by PRICE
+- Return NEW sorted list (don't modify original)
+- Use divide-and-conquer recursive approach | Time: O(n log n)
+
+Key Concepts:
+- Base case: 0 or 1 element is already sorted
+- Recursive case: divide, recursively sort halves, merge sorted halves
+- You'll likely need a helper function to merge two sorted lists
+
+Test: Menu option 2 displays stocks lowest to highest price
+
+
+FUNCTION 2: binary_search_by_date(stocks, target_date) - 20 points
+-------------------------------------------------------------------
+Algorithm: Binary Search | Purpose: Find stock by date
+
+Requirements:
+- Implement binary search from scratch
+- List is ALREADY sorted by date - DO NOT sort it
+- Return index if found, -1 if not found (NOT None)
+- Must be O(log n) - no linear search
+
+Key Concepts:
+- Initialize left=0, right=len(stocks)-1
+- while left <= right: calculate mid, compare, adjust left/right
+- Access date using stock.date attribute
+- Watch for off-by-one errors
+
+Test: Menu option 3 finds price for valid date (e.g., "2024-02-15")
+
+
+FUNCTION 3: calculate_prefix_sum_prices(stocks) - 15 points
+------------------------------------------------------------
+Algorithm: Prefix Sum | Purpose: Calculate cumulative sums
+
+Requirements:
+- Create list where each element is sum of all prices from index 0 to i
+- Formula: prefix[i] = prefix[i-1] + stocks[i].price
+- Return list of floats (same length as input)
+
+Example: Prices [100, 150, 120] → Prefix [100, 250, 370]
+
+Key Concepts:
+- prefix[0] = stocks[0].price
+- For i from 1 to n-1: prefix[i] = prefix[i-1] + stocks[i].price
+- EASIEST function - START HERE!
+
+
+FUNCTION 4: calculate_moving_average(stocks, window_size) - 20 points
+----------------------------------------------------------------------
+Algorithm: Prefix Sum Application | Purpose: Calculate moving averages
+
+Requirements:
+- Use prefix sums (call calculate_prefix_sum_prices())
+- Return list of tuples: [(date, average), ...]
+- Only include averages with enough prior data
+- Round to 2 decimal places
+
+Formula:
+- For index i >= window_size-1:
+  avg[i] = (prefix[i] - prefix[i-window_size]) / window_size
+- Edge case: when i == window_size-1, use prefix[i] / window_size
+
+Test: Menu option 4 calculates moving average for any window size
+
+
+FUNCTION 5: kadane_max_profit(stocks) - 20 points
+--------------------------------------------------
+Algorithm: Kadane's (Maximum Subarray) | Purpose: Find best buy/sell period
+
+Requirements:
+- Convert prices to daily changes: change[i] = price[i] - price[i-1]
+- Apply Kadane's algorithm to find maximum sum subarray
+- Track start/end indices of max subarray
+- Return tuple: (buy_index, sell_index, max_profit)
+
+CRITICAL: Buy index = ONE BEFORE where max subarray starts
+
+Example: Prices [150,145,155,160,140] → Changes [-,-5,+10,+5,-20]
+Max subarray: [+10,+5] → Buy index 1 ($145), Sell index 3 ($160), Profit $15
+
+Test: Menu option 5 shows optimal buy/sell dates (should find buy: 2024-01-09
+at $147.20, sell: 2024-03-19 at $186.90, profit: $39.70)
+
+
+================================================================================
+4. IMPLEMENTATION GUIDE
+================================================================================
+
+Recommended Order:
+1. calculate_prefix_sum_prices() - EASIEST
+2. binary_search_by_date()
+3. merge_sort_by_price()
+4. calculate_moving_average()
+5. kadane_max_profit() - MOST CHALLENGING
+
+General Tips:
+- Test incrementally using menu options after each function
+- Use print statements for debugging
+- Test with small examples on paper first
+- Review class notes and algorithm pseudocode before implementing
+
+
+================================================================================
+5. GRADING RUBRIC
+================================================================================
+
+Total: 100 Points
+
+Component                Points    Full Credit Criteria
+------------------------------------------------------------------------
+Merge Sort               20        Divide-and-conquer, recursive, sorts by price
+                                   ascending, returns new list
+Binary Search            20        O(log n), returns index/-1, no off-by-one errors
+Prefix Sum               15        Correct cumulative sums, handles edge cases
+Moving Average           20        Uses prefix sums, returns (date,avg) tuples
+Kadane's Algorithm       20        Converts to changes, tracks indices correctly
+Code Quality             5         Clean, readable, appropriate variable names
+------------------------------------------------------------------------
+
+Partial Credit:
+- Minor bugs: 75% of function points
+- Conceptually correct but inefficient or buggy: 50%
+- Attempted but significant errors: 25%
+- Missing or uses built-in functions: 0%
+
+
+================================================================================
+6. TESTING GUIDE
+================================================================================
+
+Run: python stock_analyzer.py
+
+Test each function as you implement it. Expected results:
+
+Option 1: View All Data
+- Displays all 60 entries (2024-01-02 to 2024-03-26)
+- Prices range $147.20 - $186.90
+
+Option 2: Sort by Price (Merge Sort)
+- Lowest to highest price order
+- First: ~$147.20 (2024-01-09), Last: ~$186.90 (2024-03-19)
+
+Option 3: Search by Date (Binary Search)
+- "2024-02-15" → finds $171.20
+- "2024-01-09" → finds $147.20 (minimum price)
+- "2024-12-25" → not found
+
+Option 4: Moving Average
+- Window 5 → 56 results, Window 10 → 51 results, Window 60 → 1 result
+- Formula: num_results = total_days - window_size + 1
+
+Option 5: Best Buy/Sell Period (Kadane's)
+- Buy: 2024-01-09 at $147.20
+- Sell: 2024-03-19 at $186.90
+- Profit: $39.70
+
+
+================================================================================
+7. FREQUENTLY ASKED QUESTIONS
+================================================================================
+
+Q: Can I use AI tools for help?
+A: Yes for learning concepts, but you must explain every line of code you
+   submit. Copying without understanding will be evident during evaluation.
+
+Q: Files not loading?
+A: Ensure stock_data.csv and stock_analyzer.py are in the same directory.
+
+================================================================================
+8. FINAL NOTES
+================================================================================
+
+Academic Integrity:
+- Collaboration within teams is expected; sharing code between teams is not
+- You must explain and defend every line of code you submit
+- Understanding WHY each algorithm is used is as important as implementation
+
+Success Tips:
+- Start early and test incrementally
+- Ask questions during class or office hours
+- Understand time complexity of each algorithm
+- Focus on learning concepts, not just making code work
+
+Good luck!
+
+================================================================================
