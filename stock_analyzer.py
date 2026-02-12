@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-# Copyright (c) 2026 Alen Rafagudinov
-# All rights reserved.
+#Final Project - Fall 2025
+#Mahbub | Rafay | Arman
 """
 Stock Price Analyzer - Final Project
 Algorithms and Data Structures Course
