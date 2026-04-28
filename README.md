@@ -15,7 +15,7 @@ This project implements a stock price analyzer that processes 60 days of histori
 | **Moving Average** | `calculate_moving_average()` | `O(n)` | Compute sliding-window averages using prefix sums |
 
 ## Team Members & Contributions
-|    Member    | Algorithms Implemented | Role Description |
+|       Member       | Algorithms Implemented | Role Description |
 |--------------|------------------------|------------------|
 | **Arman Zia** | Merge Sort | Implemented a recursive divide-and-conquer `merge_sort_by_price()` function to sort stock data without modifying the original list, ensuring `O(n log n)` performance. |
 | **Mahbub Hasan** | Binary Search & Kadane's Algorithm | Developed an `O(log n)` `binary_search_by_date()` for fast date lookups and applied Kadane’s algorithm to `kadane_max_profit()`, tracking daily price changes to identify the optimal buy/sell window. |
